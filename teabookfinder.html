@@ -7,21 +7,99 @@
     <title>Tea Books Finder</title>
     <style>
         body {
-            background-color: hsl(45, 50%, 87%); 
+            background-color: hsl(45, 50%, 87%);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+        .logo img {
+            margin-top: 20px;
+            width: 250px;
+            height: auto;
+        }
+        .kensaku {
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+            gap: 10px;
+        }
+        .kensaku input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .kensaku button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff8c00;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .kensaku button:hover {
+            background-color: #ffa500;
         }
         table {
             width: 100%;
+            max-width: 600px;
+            margin: 20px 0;
             border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        td, th {
-            padding: 10px;
-            border: 1px solid #ccc;
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        a img {
+            max-width: 50px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+        a img:hover {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 600px) {
+            .kensaku {
+                flex-direction: column;
+            }
+            th, td {
+                padding: 10px;
+                font-size: 12px;
+            }
+            a img {
+                max-width: 40px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="logo">
-        <img src="find your books.png" alt="">
+        <img src="find your books.png" alt="Logo">
     </div>
     <div class="kensaku">
         <input type="text" id="search-keyword" placeholder="キーワードを入力">

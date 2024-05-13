@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Tea Books Finder</title>
+    <style>
+        body {
+            background-color: hsl(45, 50%, 87%); 
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td, th {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="find your books.png" alt="">
+    </div>
+    <div class="kensaku">
+        <input type="text" id="search-keyword" placeholder="キーワードを入力">
+        <button id="send">検索</button>
+    </div>
+    <div>
+        <table id="list">
+            <thead>
+                <tr>
+                    <th>タイトル</th>
+                    <th>出版社</th>
+                    <th>出版年</th>
+                    <th>画像</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 検索結果はここに挿入されます -->
+            </tbody>
+        </table>
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $("#send").on("click", function() {
+        const keyword = $("#search-keyword").val(); // ユーザーが入力したキーワードを取得
+        const subject = "+subject:tea"; // お茶に関する書籍のカテゴリ指定
+        const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(keyword)}${subject}`;
+        $.ajax({
+            url: url,
+            dataType: "json",
+            success: function(data) {
+                let html = '';
+                if (data.items) {
+                    data.items.forEach(item => {
+                        html += `
+                            <tr>
+                                <td>${item.volumeInfo.title}</td>
+                                <td>${item.volumeInfo.publisher || '不明'}</td>
+                                <td>${item.volumeInfo.publishedDate || '不明'}</td>
+                                <td>
+                                    <a target="_blank" href="${item.volumeInfo.infoLink}">
+                                        <img src="${item.volumeInfo.imageLinks?.thumbnail || 'no_image.png'}" alt="Book Cover">
+                                    </a>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    html = '<tr><td colspan="4">該当する書籍が見つかりませんでした。</td></tr>';
+                }
+                $("#list tbody").empty().append(html);
+            },
+            error: function() {
+                alert('検索に失敗しました。');
+            }
+        });
+    });
+</script>
+</body>
+</html>
